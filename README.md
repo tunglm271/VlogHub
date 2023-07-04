@@ -1,4 +1,4 @@
-#  VlogHub
+ #  VlogHub
 VlogHub is a web application developed using Django, PostgreSQL, HTML, CSS, and JavaScript. It serves as a platform where users can post their vlogs and interact with other users by liking and commenting on their vlogs. Each user has a profile page, and you can follow other users to stay updated with their latest vlogs.
 ## feature 
 * User Registration and Authentication: Users can create an account and log in to the application. Passwords are securely stored using encryption techniques.
@@ -8,6 +8,8 @@ VlogHub is a web application developed using Django, PostgreSQL, HTML, CSS, and 
 * Following: Users have the option to follow other users, allowing them to see updates and new vlogs from the users they follow.
 ## Installation
 To run VlogHub locally on your machine, follow the instructions below:
-Markup : ```javascript
-         ```
+1.Clone the repository:
+---console
+         git clone https://github.com/your-username/vloghub.git
+---
 [![My Skills](https://skills.thijs.gg/icons?i=py,postgres,html,css&theme=light)](https://skills.thijs.gg)
