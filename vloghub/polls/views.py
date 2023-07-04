@@ -10,6 +10,13 @@ def Index(request):
         profile = Profile.objects.get(user_id = request.user.id)
         form = VlogForm(request.POST or None)
         if request.method == 'POST':
+            currtent_user_profile = request.user.profile
+            action = request.POST['follow']
+            if action == "unfollow":
+                currtent_user_profile.follows.remove(profile)
+            elif action == "follow":
+                currtent_user_profile.follows.add(profile)
+            currtent_user_profile.save()
             if form.is_valid():
                 new_vlog = form.save(commit=False)
                 new_vlog.user = request.user
@@ -31,7 +38,6 @@ def ProfileList(request):
     else:
         messages.success(request,("you need to sign in first!"))
         return redirect('/login/')
-
 def Login(request):
     if request.method == 'POST':
         username= request.POST['username']

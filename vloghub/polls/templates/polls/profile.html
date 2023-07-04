@@ -48,22 +48,32 @@
                 {%for i in vlogs%}
                     <div class="card info-card customers-card">           
                           <div class="card-body">
-                            <h5 class="card-title">{{i.user.username}}<span>| {{i.created_at}}</span></h5>
+                            <h5 class="card-title">{{i.user.username}}<span> | {{i.created_at}}</span></h5>
 
                             <div class="d-flex align-items-center">
                                 {{i.content}}
                             </div>
-
+                            <p style="float:right;margin-bottom: 0;">{{i.number_of_likes}} Likes</p>
                           </div>
                           <div class="card-footer">
-                            {{i.number_of_likes}} Likes
-                            <a href="{%url 'like' i.id%}" style="float:right">
-                              {%if user in i.likes.all%}
-                              Unlike <i class="bi bi-hand-thumbs-up-fill"></i>
-                              {%else%}
-                              Like <i class="bi bi-hand-thumbs-up" ></i>
-                              {% endif %}
-                            </a>
+                            <div class="container">
+                              <div id="row align-items-start">
+                                <div class="col-4" style="display: inline-block;">
+                                  <a href="{%url 'like' i.id%}" >
+                                    {%if user in i.likes.all%}
+                                    <i class="bi bi-hand-thumbs-up-fill"></i> Unlike 
+                                    {%else%}
+                                    <i class="bi bi-hand-thumbs-up" ></i> Like
+                                    {% endif %}
+                                  </a>
+                                </div>
+                                <div class="col-3" style="display: inline-block">
+                                  <a href="" style="margin-left: 2rem;"><i class="bi bi-chat"></i>   Comment</a></div>
+                                <div class="col-4" style="display: inline-block">
+                                  <a href="{%url 'share' i.id%}" style="margin-left:8rem;" ><i class="ri ri-share-forward-fill"></i> Share</a>
+                                </div>
+                            </div>
+                          </div>
                           </div>
                         </div>
                 {%endfor%}
@@ -85,7 +95,7 @@
                               <img src="{% static 'assets/img/profile-img.jpg' %}" class="rounded-circle" alt="Profile">
                             {%endif%}
                             <h2>{{profile.user.username}}</h2>
-                            <h3>Web Designer</h3>
+                            <h3>{{profile.profileinfor.Job}}</h3>
                             <div class="social-links mt-2">
                               <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
                               <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
@@ -93,6 +103,8 @@
                               <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
                             </div>
                           </div>
+                          <h4 style="text-align: center;">About me</h4>
+                          <p align="justify">{{profile.profileinfor.About}}</p>
                           <div class="card-body">
                             <h5 class="card-title"><strong>Follow</strong></h5>
               
