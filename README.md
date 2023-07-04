@@ -35,7 +35,7 @@ python manage.py migrate
 python manage.py runserver
 ```
 8. Access VlogHub in your web browser at **http://localhost:8000/**<br>
-## The Reason Why a build this web app
+## The Reason Why i built this web app
 i choice django framework because its convenience, how it's fexible with database, high sercurity and
 i already have a friend-collaborate web app project build on django framework. So with pre-existing foundation about html,css and django, i quickly start building **Vloghub**
 ## Time
