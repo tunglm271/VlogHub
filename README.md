@@ -31,5 +31,9 @@ python manage.py makemigrations
 python manage,py migrate
 ```
 7. Start the development server
-8. Access VlogHub in your web browser at **http://localhost:8000/**
+8. Access VlogHub in your web browser at **http://localhost:8000/**<br>
+## Contact
+> If you have any questions, suggestions, or feedback, please contact me at **nguenxuantung437@gmail.com**
+
+
 [![My Skills](https://skills.thijs.gg/icons?i=py,postgres,html,css&theme=light)](https://skills.thijs.gg)
