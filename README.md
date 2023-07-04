@@ -9,15 +9,15 @@ VlogHub is a web application developed using Django, PostgreSQL, HTML, CSS, and 
 ## Installation
 To run VlogHub locally on your machine, follow the instructions below:
 1. Clone the repository:
-```
+```console
 git clone https://github.com/your-username/vloghub.git
 ```
 2. Navigate to the project directory
-```
+```console
 cd vloghub
 ```
 3. Create a virtual environment
-```
+```console
 python3 -m venv venv
 ```
 4. Activate the virtual environment
@@ -26,11 +26,14 @@ python3 -m venv venv
    * Create a new database in PostgreSQL.
    * Update the database settings in **vloghub/settings.py** to match your PostgreSQL configuration.
 6. Apply the database migrations
-```
+```console
 python manage.py makemigrations
 python manage.py migrate
 ```
 7. Start the development server
+```console
+python manage.py runserver
+```
 8. Access VlogHub in your web browser at **http://localhost:8000/**<br>
 ## Contact
 > If you have any questions, suggestions, or feedback, please contact me at **nguenxuantung437@gmail.com**
