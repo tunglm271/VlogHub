@@ -1,0 +1,41 @@
+{% extends 'polls/base.html'%}
+{% load static %}
+{%block content %}
+    <div class="pagetitle">
+      <h1>Profile list</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item active">Profile List</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+    <div class="row">
+ <!-- Left side columns -->
+        <div class="col-9">
+    {%if profiles %}
+        {% for profile in profiles %}
+                   <div class="card mb-3">
+            <div class="row g-0">
+              <div class="col-md-4">
+              {%if profile.profileinfor.profile_image %}
+              <img src="{{profile.profileinfor.profile_image.url}}" class="img-fluid rounded-start" alt="...">
+              {%else%}
+                <img src="{% static 'assets/img/card.jpg' %}" class="img-fluid rounded-start" alt="...">
+              {%endif%}
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title"><a href="{%url 'Profile' profile.user.id %}">{{profile.user.username}}</a></h5>
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  
+                  <br/><br/>last Update: {{profile.date_modified}}
+                </div>
+              </div>
+            </div>
+          </div>
+        {%endfor%} 
+    {%endif%}
+    </div>
+  </div>       
+{% endblock %}

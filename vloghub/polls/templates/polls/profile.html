@@ -1,0 +1,219 @@
+{% extends 'polls/base.html'%}
+{% load static %}
+{%block content %}
+    <div class="pagetitle">
+      <h1>{{profile.user.username}}'s Profile</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item active">Profile list</li>
+          <li class="breadcrumb-item active">{{profile.user.username}}'s Profile</li>
+        </ol>
+      </nav>
+    </div>
+
+     <div class="card">
+            <div class="card-body">
+              <div>
+              <h5 class="card-title">{{profile.user.username}}
+                  <form method=POST style="float:right">
+                    {%csrf_token%}
+                    {%if profile in user.profile.follows.all%}
+                      <button class="btn btn-outline-danger" name='follow'
+                      value='unfollow' type='submit'>unfollow {{profile.user.username}}</button>
+                    {% else %}
+                      <button class="btn btn-outline-primary" name='follow'
+                      value='follow' type='submit'>follow {{profile.user.username}}</button>
+                    {% endif %}
+                  </form>
+              </h5>
+
+            </div>
+              <!-- Bordered Tabs -->
+              <ul class="nav nav-tabs nav-tabs-bordered" id="borderedTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-home" type="button" role="tab" aria-controls="home" aria-selected="true">Vlog</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Information</button>
+                </li>
+              </ul>
+              <div class="tab-content pt-2" id="borderedTabContent">
+                <div class="tab-pane fade show active" id="bordered-home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="row">
+               <!-- Left side columns -->
+                      <div class="col-lg-8">
+                        <div class="row">
+            {%if vlogs.all %}
+                {%for i in vlogs%}
+                    <div class="card info-card customers-card">           
+                          <div class="card-body">
+                            <h5 class="card-title">{{i.user.username}}<span>| {{i.created_at}}</span></h5>
+
+                            <div class="d-flex align-items-center">
+                                {{i.content}}
+                            </div>
+
+                          </div>
+                        </div>
+                {%endfor%}
+            {% else %}
+            <section class="section error-404 min-vh-100 d-flex flex-column align-items-center justify-content-center">
+                <h5>You haven't post anything!</h5>
+                <img src="{%static 'assets/img/not-found.svg' %}" class="img-fluid py-5" alt="Page Not Found">
+            </section>
+            {% endif %}
+                        </div>
+                      </div><!-- End Left side columns -->
+              
+                      <!-- Right side columns -->
+                      <div class="col-lg-4">
+                          <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                            {%if profile.profileinfor.profile_image %}
+                              <img src="{{profile.profileinfor.profile_image.url}}" class="rounded-circle" alt="Profile" style='width:100%'>
+                            {%else%}
+                              <img src="{% static 'assets/img/card.jpg' %}" class="rounded-circle" alt="Profile">
+                            {%endif%}
+                            <h2>{{profile.user.username}}</h2>
+                            <h3>Web Designer</h3>
+                            <div class="social-links mt-2">
+                              <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                              <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                              <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                              <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                            </div>
+                          </div>
+                          <div class="card-body">
+                            <h5 class="card-title"><strong>Follow</strong></h5>
+              
+                            <!-- List group with custom content -->
+                            <ol class="list-group list-group-numbered">
+                            {%if profile.follows.all %}
+                              
+                              {%for i in profile.follows.all %}
+                              <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto">
+                                  <div class="fw-bold"><a href="{%url 'Profile' i.user.id %}">@{{i}}</a><br/> </div>
+                                  Cras justo odio
+                                </div>
+                                <span class="badge bg-primary rounded-pill">14</span>
+                              </li>
+                              {%endfor%}
+                              {% else %}
+                              <h5>None</h5>
+                              {% endif %}
+                            </ol><!-- End with custom content -->
+                        </div>
+                            <div class="card-body">
+                              <h5 class="card-title"><strong>Followed by</strong></h5>
+                
+                              <!-- List group with custom content -->
+                              <ol class="list-group list-group-numbered">
+                               {%if profile.followed_by.all %}
+                                {%for i in profile.followed_by.all %}
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                  <div class="ms-2 me-auto">
+                                    <div class="fw-bold"><a href="{%url 'Profile' i.user.id %}">@{{i}}</a><br/> </div>
+                                    Cras justo odio
+                                  </div>
+                                  <span class="badge bg-primary rounded-pill">14</span>
+                                </li>
+                                {%endfor%}
+                                {% else %}
+                              <h5>None</h5>
+                              {% endif %}
+                              </ol><!-- End with custom content -->
+                            </div>
+                          </div>
+                    </div>
+
+
+
+                </div>
+                <div class="tab-pane fade" id="bordered-profile" role="tabpanel" aria-labelledby="profile-tab">
+                 <section class="section profile">
+      <div class="row">
+        <div class="col-xl-4">
+
+          <div class="card">
+            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+              {%if profile.profileinfor.profile_image %}
+                <img src="{{profile.profileinfor.profile_image.url}}" class="rounded-circle" alt="Profile" style='width:100%'>
+              {%else%}
+                <img src="{% static 'assets/img/card.jpg' %}" class="rounded-circle" alt="Profile">
+              {%endif%}
+              <h2>{{profile.user.username}}</h2>
+              <h3>{{profile.profileinfor.Job}}</h3>
+              <div class="social-links mt-2">
+                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-xl-8">
+
+          <div class="card">
+            <div class="card-body pt-3">
+              <div class="tab-content pt-2">
+
+                <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                  <h5 class="card-title">About</h5>
+                  <p class="small fst-italic">{{profile.profileinfor.About}}</p>
+
+                  <h5 class="card-title">Profile Details</h5>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label ">Full Name</div>
+                    <div class="col-lg-9 col-md-8">{{profile.profileinfor.full_name}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Company</div>
+                    <div class="col-lg-9 col-md-8">{{profile.profileinfor.Company}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Job</div>
+                    <div class="col-lg-9 col-md-8">{{profile.profileinfor.Job}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Country</div>
+                    <div class="col-lg-9 col-md-8">{{profile.profileinfor.Country}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Address</div>
+                    <div class="col-lg-9 col-md-8">{{profile.profileinfor.Address}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Phone</div>
+                    <div class="col-lg-9 col-md-8">{{profile.profileinfor.Phone}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Email</div>
+                    <div class="col-lg-9 col-md-8">{{profile.profileinfor.Email}}</div>
+                  </div>
+
+                </div>
+              </div><!-- End Bordered Tabs -->
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+                </div>
+              </div><!-- End Bordered Tabs -->
+            </div>
+          </div>
+{% endblock %}
