@@ -55,4 +55,9 @@ class vlog(models.Model):
             f"({self.created_at:%Y-%m-%d %H:%M}):"
             f"{self.content}..."
         )
-
+ 
+class comment(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    vlog = models.ForeignKey(vlog,on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    content = models.TextField(max_length=150)

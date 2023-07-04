@@ -46,18 +46,14 @@
                     <li class="dropdown-header text-start">
                       <h6>Options</h6>
                     </li>
-                    <form method=POST>
                       {%csrf_token%}
-                      {%if profile in user.profile.follows.all%}
-                        <li><button class="dropdown-item" name='follow'
-                        value='unfollow' type='submit'>unfollow</button></li>
+                      {%if i.user.profile in user.profile.follows.all %}
+                        <li><a class="dropdown-item" href="{%url 'unfollow' i.user.id%}">Unfollow</a></li>
                       {% else %}
-                        <li><button class="dropdown-item" name='follow'
-                        value='follow' type='submit'>follow</button></li>
+                      <li><a class="dropdown-item" href="{%url 'follow' i.user.id%}">Follow</a></li>
                       {% endif %}
-                    </form>
                     <li><a class="dropdown-item" href="{%url 'Profile' i.user.id%}">See profile</a></li>
-                    <li><a class="dropdown-item" href="#">Report</a></li>
+                    <li><a class="dropdown-item" href="{%url 'contact' %}">Report</a></li>
                   </ul>
                 </div>
 
@@ -102,13 +98,24 @@
                 </div>
               </div>
                 </div>
+                <div class="card-footer">
+                  <div id="row align-items-start">
+                    <div class="col-1" style="display: inline-block;">
+                      <img src="{{user.profile.profileinfor.profile_image.url}}" alt="Profile" class="rounded-circle" width="60%">
+                    </div>
+                    <div class="col-8" style="display: inline-block;">
+                      <input type="text" placeholder="Comment..." class="form-control">
+                    </div>
+                    <div class="col-2" style="display: inline-block;">
+                        <button type="button" class="btn btn-primary" style="margin-left: 3rem;">Send</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-
-            </div>
             {%endfor%}
           </div>
         </div><!-- End Left side columns -->
-
         <!-- Right side columns -->
         <div class="col-lg-4">
 

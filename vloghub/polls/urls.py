@@ -14,4 +14,6 @@ urlpatterns = [
     path('register/',views.Register,name='register'),
     path('vlog_like/<int:pk>',views.vlog_like,name='like'),
     path('vlog_share/<int:pk>',views.vlog_share,name='share'),
+    path('unfollow/<int:pk>',views.unfollow,name="unfollow"),
+    path('follow/<int:pk>',views.follow,name="follow")
 ]

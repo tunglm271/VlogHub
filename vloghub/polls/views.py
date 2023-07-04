@@ -10,13 +10,6 @@ def Index(request):
         profile = Profile.objects.get(user_id = request.user.id)
         form = VlogForm(request.POST or None)
         if request.method == 'POST':
-            currtent_user_profile = request.user.profile
-            action = request.POST['follow']
-            if action == "unfollow":
-                currtent_user_profile.follows.remove(profile)
-            elif action == "follow":
-                currtent_user_profile.follows.add(profile)
-            currtent_user_profile.save()
             if form.is_valid():
                 new_vlog = form.save(commit=False)
                 new_vlog.user = request.user
@@ -124,3 +117,15 @@ def vlog_share(request,pk):
     if request.user.is_authenticated:
         Vlog = get_object_or_404(vlog,id=pk)
     return None
+
+def unfollow(request,pk):
+    profile = Profile.objects.get(user_id=pk)
+    request.user.profile.follows.remove(profile)
+    request.user.profile.save()
+    return redirect(request.META.get("HTTP_REFERER"))
+
+def follow(request,pk):
+    profile = Profile.objects.get(user_id=pk)
+    request.user.profile.follows.add(profile)
+    request.user.profile.save()
+    return redirect(request.META.get("HTTP_REFERER"))

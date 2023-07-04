@@ -10,12 +10,29 @@
         </ol>
       </nav>
     </div><!-- End Page Title -->
-    <div class="row">
- <!-- Left side columns -->
+        <div class="row">
+      <!-- Left side columns -->
         <div class="col-9">
+    <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">People</h5>
+
+              <!-- Default Tabs -->
+              <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">All</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Following</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Follow you</button>
+                </li>
+              </ul>
+              <div class="tab-content pt-2" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
     {%if profiles %}
         {% for profile in profiles %}
-            <div class="card mb-3">
             <div class="row g-0">
               <div class="col-md-4">
               {%if profile.profileinfor.profile_image %}
@@ -33,9 +50,59 @@
                 </div>
               </div>
             </div>
-          </div>
+            <hr>
         {%endfor%} 
     {%endif%}
-    </div>
-  </div>       
+                </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                  {%for profile in user.profile.follows.all %}
+                  <div class="row g-0">
+              <div class="col-md-4">
+              {%if profile.profileinfor.profile_image %}
+              <img src="{{profile.profileinfor.profile_image.url}}" class="img-fluid rounded-start" alt="...">
+              {%else%}
+                <img src="{% static 'assets/img/profile-img.jpg' %}" class="img-fluid rounded-start" alt="..." style="width:100%">
+              {%endif%}
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title"><a href="{%url 'Profile' profile.user.id %}">{{profile.user.username}}</a></h5>
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  
+                  <br/><br/>last Update: {{profile.date_modified}}
+                </div>
+              </div>
+            </div>
+            <hr>
+        {%endfor%} 
+                  
+                </div>
+                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                   {%for profile in user.profile.followed_by.all %}
+                  <div class="row g-0">
+              <div class="col-md-4">
+              {%if profile.profileinfor.profile_image %}
+              <img src="{{profile.profileinfor.profile_image.url}}" class="img-fluid rounded-start" alt="...">
+              {%else%}
+                <img src="{% static 'assets/img/profile-img.jpg' %}" class="img-fluid rounded-start" alt="..." style="width:100%">
+              {%endif%}
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title"><a href="{%url 'Profile' profile.user.id %}">{{profile.user.username}}</a></h5>
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  
+                  <br/><br/>last Update: {{profile.date_modified}}
+                </div>
+              </div>
+            </div>
+            <hr>
+        {%endfor%} 
+                </div>
+              </div><!-- End Default Tabs -->
+        </div>
+        </div>
+
+        </div>
+  </div>  
 {% endblock %}
