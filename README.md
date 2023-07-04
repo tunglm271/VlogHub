@@ -28,7 +28,7 @@ python3 -m venv venv
 6. Apply the database migrations
 ```
 python manage.py makemigrations
-python manage,py migrate
+python manage.py migrate
 ```
 7. Start the development server
 8. Access VlogHub in your web browser at **http://localhost:8000/**<br>
