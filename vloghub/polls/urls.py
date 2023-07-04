@@ -11,5 +11,7 @@ urlpatterns = [
     path("f.q.a/",views.FQA,name='FQA'),
     path('contact/',views.contact,name='contact'),
     path('logout',views.Logout,name='logout'),
-    path('register/',views.Register,name='register')
+    path('register/',views.Register,name='register'),
+    path('vlog_like/<int:pk>',views.vlog_like,name='like'),
+    path('vlog_share/<int:pk>',views.vlog_share,name='share'),
 ]

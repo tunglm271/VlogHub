@@ -36,7 +36,9 @@
         </div>
       </div>
           {%for i in vlogs%}
-          <div class="card info-card customers-card">
+          <div class="col-xxl-4 col-xl-12">
+
+              <div class="card info-card customers-card">
 
                 <div class="filter">
                   <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -50,22 +52,51 @@
                     <li><a class="dropdown-item" href="#">This Year</a></li>
                   </ul>
                 </div>
-      
+
                 <div class="card-body">
                   <h5 class="card-title">{{i.user.username}}<span>| {{i.created_at}}</span></h5>
-                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                    {%if i.profileinfor.profile_image %}
-                  <img src="{{i.profileinfor.profile_image.url}}" class="rounded-circle" alt="Profile" style='max-width: 100px;'>
-                    {%else%}
-                  <img src="{% static 'assets/img/card.jpg' %}" class="rounded-circle" alt="Profile">
-                    {%endif%}
-                  </div>
-                  <div class="d-flex align-items-center">
-                      {{i.content}}
-                  </div>
 
+                  <div class="container">
+                    <div class="row g-0">
+                      <div class="col-md-1">
+                        {%if i.user.profile.profileinfor.profile_image %}
+                          <img src="{{i.user.profile.profileinfor.profile_image.url}}" class="rounded-circle" alt="Profile" style='width:100%'>
+                        {%else%}
+                        <img src="{% static 'assets/img/profile-img.jpg' %}" class="rounded-circle" alt="Profile">
+                        {%endif%}
+                      </div>
+                      <div class="col-md-11">
+                        <div class="card-body" style="padding-left: 12%;">
+                          <h5 class="card-title" style="margin-bottom: 0;">{{i.content}}</h5>
+                        </div>
+                        <p style="float:right;margin-bottom: 0;">{{i.number_of_likes}} Likes</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <div class="container">
+                  <div id="row align-items-start">
+                    <div class="col-4" style="display: inline-block;">
+                      <a href="{%url 'like' i.id%}" >
+                        {%if user in i.likes.all%}
+                        <i class="bi bi-hand-thumbs-up-fill"></i> Unlike 
+                        {%else%}
+                        <i class="bi bi-hand-thumbs-up" ></i> Like
+                        {% endif %}
+                      </a>
+                    </div>
+                    <div class="col-3" style="display: inline-block">
+                      <a href="" style="margin-left: 2rem;"><i class="bi bi-chat"></i>   Comment</a></div>
+                    <div class="col-4" style="display: inline-block">
+                      <a href="{%url 'share' i.id%}" style="margin-left:8rem;" ><i class="ri ri-share-forward-fill"></i> Share</a>
+                    </div>
                 </div>
               </div>
+                </div>
+              </div>
+
+            </div>
             {%endfor%}
           </div>
         </div><!-- End Left side columns -->

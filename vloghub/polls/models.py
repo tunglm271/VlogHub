@@ -45,7 +45,10 @@ class vlog(models.Model):
     user = models.ForeignKey(User,related_name='vlogs',on_delete=models.DO_NOTHING)
     content = models.TextField(max_length=500)
     created_at = models.DateTimeField(auto_now_add=True)
+    likes = models.ManyToManyField(User,related_name="vlog_like",blank=True)
 
+    def number_of_likes(self):
+        return self.likes.count()
     def __str__(self):
         return(
             f"{self.user}"

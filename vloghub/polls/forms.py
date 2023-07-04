@@ -14,7 +14,7 @@ class VlogForm(forms.ModelForm):
         )
     class Meta:
         model = vlog
-        exclude = ("user",)
+        exclude = ("user","likes")
 
 class SignUpForm(UserCreationForm):
     class Meta:

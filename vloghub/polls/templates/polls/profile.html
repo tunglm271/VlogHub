@@ -55,6 +55,16 @@
                             </div>
 
                           </div>
+                          <div class="card-footer">
+                            {{i.number_of_likes}} Likes
+                            <a href="{%url 'like' i.id%}" style="float:right">
+                              {%if user in i.likes.all%}
+                              Unlike <i class="bi bi-hand-thumbs-up-fill"></i>
+                              {%else%}
+                              Like <i class="bi bi-hand-thumbs-up" ></i>
+                              {% endif %}
+                            </a>
+                          </div>
                         </div>
                 {%endfor%}
             {% else %}
@@ -70,9 +80,9 @@
                       <div class="col-lg-4">
                           <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
                             {%if profile.profileinfor.profile_image %}
-                              <img src="{{profile.profileinfor.profile_image.url}}" class="rounded-circle" alt="Profile" style='width:100%'>
+                              <img src="{{profile.profileinfor.profile_image.url}}" class="rounded-circle" alt="Profile" style='width:100px'>
                             {%else%}
-                              <img src="{% static 'assets/img/card.jpg' %}" class="rounded-circle" alt="Profile">
+                              <img src="{% static 'assets/img/profile-img.jpg' %}" class="rounded-circle" alt="Profile">
                             {%endif%}
                             <h2>{{profile.user.username}}</h2>
                             <h3>Web Designer</h3>

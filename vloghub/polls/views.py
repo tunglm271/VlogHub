@@ -1,4 +1,4 @@
-from django.shortcuts import render,HttpResponse, redirect
+from django.shortcuts import render,HttpResponse, redirect,get_object_or_404
 from django.contrib import messages
 from .models import Profile,vlog,ProfileInfor
 from .forms import VlogForm, SignUpForm,PostProfile
@@ -105,5 +105,16 @@ def MyProfile(request):
         messages.success(request,("you need to sign in first!"))
         return redirect('/login/')
 
-def MyVlog(request):
+def vlog_like(request, pk):
+    if request.user.is_authenticated:
+        Vlog = get_object_or_404(vlog,id=pk)
+        if Vlog.likes.filter(id=request.user.id):
+            Vlog.likes.remove(request.user)
+        else:
+            Vlog.likes.add(request.user)
+        return redirect(request.META.get("HTTP_REFERER"))
+
+def vlog_share(request,pk):
+    if request.user.is_authenticated:
+        Vlog = get_object_or_404(vlog,id=pk)
     return None
