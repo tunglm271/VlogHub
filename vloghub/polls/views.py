@@ -77,6 +77,8 @@ def FQA(request):
 def contact(request):
     profile = Profile.objects.get(user_id = request.user.id)
     return render(request,'polls/pages-contact.html',{'profile':profile})
+
+# Profile function
 def ViewProfile(request,pk):
     if request.user.is_authenticated:
         profile = Profile.objects.get(user_id = pk)
@@ -109,6 +111,18 @@ def MyProfile(request):
         messages.success(request,("you need to sign in first!"))
         return redirect('/login/')
 
+def unfollow(request,pk):
+    profile = Profile.objects.get(user_id=pk)
+    request.user.profile.follows.remove(profile)
+    request.user.profile.save()
+    return redirect(request.META.get("HTTP_REFERER"))
+
+def follow(request,pk):
+    profile = Profile.objects.get(user_id=pk)
+    request.user.profile.follows.add(profile)
+    request.user.profile.save()
+    return redirect(request.META.get("HTTP_REFERER"))
+# vlog interact funtion
 def vlog_like(request, pk):
     if request.user.is_authenticated:
         Vlog = get_object_or_404(vlog,id=pk)
@@ -126,17 +140,31 @@ def vlog_share(request,pk):
         Vlog = get_object_or_404(vlog,id=pk)
     return None
 
-def unfollow(request,pk):
-    profile = Profile.objects.get(user_id=pk)
-    request.user.profile.follows.remove(profile)
-    request.user.profile.save()
-    return redirect(request.META.get("HTTP_REFERER"))
-
-def follow(request,pk):
-    profile = Profile.objects.get(user_id=pk)
-    request.user.profile.follows.add(profile)
-    request.user.profile.save()
-    return redirect(request.META.get("HTTP_REFERER"))
+def delete_vlog(request,pk):
+    Vlog = get_object_or_404(vlog,id=pk)
+    if Vlog.user == request.user:
+        Vlog.delete()
+        messages.success(request,("The vlog has been deleted!"))
+        return redirect(request.META.get("HTTP_REFERER"))
+    else:
+        messages.success(request,("You don't own that vlog!"))
+        return redirect('/')
+def update_vlog(request,pk):
+    Vlog = get_object_or_404(vlog,id=pk)
+    if Vlog.user == request.user:
+        form = VlogForm(request.POST or None,instance=Vlog)
+        if request.method == "POST":
+            if form.is_valid():
+                form.save()
+                messages.success(request,("Your Vlog has been updated!"))
+                return redirect(request.META.get("HTTP_REFERER"))
+        else:
+            vlogs = vlog.objects.filter(user = request.user).order_by('-created_at').exclude(id = pk)
+            profile = Profile.objects.get(user= request.user)
+            return render(request,"polls/edit_vlog.html",{'vlogs':vlogs,'profile':profile,'form':form,'Vlog':Vlog})
+    else:
+        messages.success(request,("You don't own that vlog!"))
+        return redirect('/')
 
 def sreach(request):
     sreached = request.POST['query']

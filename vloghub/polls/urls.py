@@ -16,5 +16,7 @@ urlpatterns = [
     path('vlog_share/<int:pk>',views.vlog_share,name='share'),
     path('unfollow/<int:pk>',views.unfollow,name="unfollow"),
     path('follow/<int:pk>',views.follow,name="follow"),
-    path('sreached/',views.sreach,name='sreach')
+    path('sreached/',views.sreach,name='sreach'),
+    path("delete/<int:pk>",views.delete_vlog,name="delete"),
+    path("update/<int:pk>",views.update_vlog,name="update")
 ]

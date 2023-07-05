@@ -100,7 +100,7 @@
                 </div>
               </div>
                 </div>
-                <div class="card-footer">
+                <div class="card-footer" style="padding-bottom: 1rem;">
                   <div id="row align-items-start">
                     <div class="col-1" style="display: inline-block;">
                       {%if i.user.profile.profileinfor.profile_image %}
@@ -120,7 +120,8 @@
                     </form>
                     </div>
                   </div>
-                  <div class="card-footer">
+                  {% if i.commented.all%}
+                  <div class="card-footer" style="padding-bottom: 0;">
                   {% for j in i.commented.all%}
                     <div class="row align-items-start">
                       <div class="col-1" style="display: inline-block;">
@@ -137,6 +138,7 @@
                     </div>
                   {% endfor %}
                 </div>
+                {%endif%}
                 </div>
               </div>
             {%endfor%}

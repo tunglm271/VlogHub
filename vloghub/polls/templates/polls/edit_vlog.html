@@ -52,13 +52,69 @@
                <!-- Left side columns -->
                       <div class="col-lg-8">
                         <div class="row">
+                        <div class="card info-card customers-card">           
+                          <div class="card-body">
+                            <h5 class="card-title">{{Vlog.user.username}}<span> | {{Vlog.created_at}}</span></h5>
+                            <div class="d-flex align-items-center">
+                                {{Vlog.content}}
+                            </div>
+                            <p style="float:right;margin-bottom: 0;">{{Vlog.number_of_likes}} Likes</p>
+                          </div>
+                          <div class="card-footer">
+                            <div class="container">
+                              <div id="row align-items-start">
+                                <div class="col-4" style="display: inline-block;">
+                                  <a href="{%url 'like' Vlog.id%}" >
+                                    {%if user in Vlog.likes.all%}
+                                    <i class="bi bi-hand-thumbs-up-fill"></i> Unlike 
+                                    {%else%}
+                                    <i class="bi bi-hand-thumbs-up" ></i> Like
+                                    {% endif %}
+                                  </a>
+                                </div>
+                                <div class="col-3" style="display: inline-block">
+                                  <a href="" style="margin-left: 2rem;"><i class="bi bi-chat"></i>Comment</a></div>
+                                <div class="col-4" style="display: inline-block">
+                                  <a href="{%url 'share' Vlog.id%}" style="margin-left:8rem;" ><i class="ri ri-share-forward-fill"></i> Share</a>
+                                </div>
+                            </div>
+                          </div>
+                          </div>
+                          {%if Vlog.commented.all%}
+                          <div class="card-footer">
+                            {% for j in Vlog.commented.all%}
+                              <div class="row align-items-start">
+                                <div class="col-1" style="display: inline-block;">
+                                  {%if j.user.profile.profileinfor.profile_image %}
+                                      <img src="{{j.user.profile.profileinfor.profile_image.url}}" class="rounded-circle" alt="Profile" style='width:70%'>
+                                    {%else%}
+                                    <img src="{% static 'assets/img/profile-img.jpg' %}" class="rounded-circle" alt="Profile" style="width:100%">
+                                    {%endif%}
+                                </div>
+                                <div class="col-8" style="display: inline-block;">
+                                  <h5 class="card-title" style="padding: 0;">{{j.user.username}}<span> | {{j.created_at}}</span></h5>
+                                  <p>{{j.content}}</p>
+                              </div>
+                              </div>
+                            {% endfor %}
+                          </div>
+                          {% endif %}
+                            <div class="card-body">
+                            <h5 class="card-title" style="padding-top: 0;">Edit your vlog!</h5>
+                            <form method="POST">
+                            {%csrf_token%}
+                            {{form.as_p}}
+                            <button class="btn btn-outline-primary" type="submit" style="float:right">UPDATE VLOG!</button>
+                        </form>
+                        </div>
+                        </div>
             {%if vlogs.all %}
                 {%for i in vlogs%}
                     <div class="card info-card customers-card">           
                           <div class="card-body">
                             <h5 class="card-title">{{i.user.username}}<span> | {{i.created_at}}</span>
                               {%if profile.user == request.user%}
-                              <a href="{%url 'update' i.id%}" class="btn btn-outline-primary" style="border: 0;"><i class="bi bi-pencil-square"></i> EDIT</a>
+                              <a href="{%url 'update' i.id%}" class="btn btn-outline-primary" style="border: 0;"><i class="bi bi-pencil-square"></i>EDIT</a>
                               <a href="{%url 'delete' i.id%}" class="btn btn-outline-danger" style="border: 0;"><i class="bi bi-trash-fill"></i> DELETE</a>
                               {%endif%}
                             </h5>
