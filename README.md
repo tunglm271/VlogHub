@@ -55,4 +55,4 @@ To deploy VlogHub and make it accessible to others, i used ngrok, a tool that cr
 > If you have any questions, suggestions, or feedback, please contact me at **nguenxuantung437@gmail.com**
 
 
-[![My Skills](https://skills.thijs.gg/icons?i=py,postgres,html,css&theme=light)](https://skills.thijs.gg)
+[![My Skills](https://skills.thijs.gg/icons?i=py,postgres,html,css,javascript&theme=light)](https://skills.thijs.gg)
