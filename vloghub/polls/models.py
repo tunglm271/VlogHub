@@ -57,7 +57,10 @@ class vlog(models.Model):
         )
  
 class comment(models.Model):
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
-    vlog = models.ForeignKey(vlog,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,related_name="commented",on_delete=models.CASCADE)
+    vlog = models.ForeignKey(vlog,related_name="commented",on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     content = models.TextField(max_length=150)
+
+    def __str__(self):
+        return self.content

@@ -1,7 +1,8 @@
 from django.shortcuts import render,HttpResponse, redirect,get_object_or_404
 from django.contrib import messages
-from .models import Profile,vlog,ProfileInfor
+from .models import Profile,vlog,ProfileInfor, comment
 from .forms import VlogForm, SignUpForm,PostProfile
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 
@@ -16,12 +17,16 @@ def Index(request):
                 new_vlog.save()
                 messages.success(request,("You just post a new vlog!"))
                 return redirect('/')
+            a = request.POST['send']
+            vlog_com = vlog.objects.get(id= a)
+            com_content = request.POST['comment']
+            new_com = comment(vlog=vlog_com,content=com_content,user= request.user)
+            new_com.save()
         vlogs = vlog.objects.all().order_by('-created_at')
         return render(request,"polls/index.html",{'vlogs':vlogs,'form':form,'profile':profile})
     else:
-        profile = Profile.objects.get(user= request.user)
         vlogs = vlog.objects.all().order_by('-created_at')
-        return render(request,"polls/index.html",{'vlogs':vlogs,'profile':profile})
+        return render(request,"polls/index.html",{'vlogs':vlogs})
 
 def ProfileList(request):
     if request.user.is_authenticated:
@@ -112,6 +117,9 @@ def vlog_like(request, pk):
         else:
             Vlog.likes.add(request.user)
         return redirect(request.META.get("HTTP_REFERER"))
+    else:
+        messages.success(request,("you need to sign in first!"))
+        return redirect('/login/')
 
 def vlog_share(request,pk):
     if request.user.is_authenticated:
@@ -129,3 +137,9 @@ def follow(request,pk):
     request.user.profile.follows.add(profile)
     request.user.profile.save()
     return redirect(request.META.get("HTTP_REFERER"))
+
+def sreach(request):
+    sreached = request.POST['query']
+    UserScreach = User.objects.filter(username__contains = sreached)
+    VlogSreach = vlog.objects.filter(content__contains = sreached)
+    return render(request,"polls/sreached.html",{'sreached':sreached,'UserScreach':UserScreach,'VlogSreach':VlogSreach})

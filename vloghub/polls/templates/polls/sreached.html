@@ -1,148 +1,143 @@
- {% extends "polls/base.html" %}
+{%extends 'polls/base.html' %}
+{%block content %}
 {%load static %}
- {% block content %}
- {% if messages%}
- {% for i in messages %}
-  <div class="alert alert-success alert-dismissible fade show" role="alert">
-             <i class="bi bi-check-circle"></i>
-             {{i}}
-             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-           </div>
- {% endfor %}
-{% endif %}
-    <div class="pagetitle">
-      <h1>New feed</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item active">New feed</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
-
     <section class="section dashboard">
+        <div class="pagetitle">
+      <h1>You screached for {{sreached}}</h1>
+    </div><!-- End Page Title -->
       <div class="row">
- <!-- Left side columns -->
-        <div class="col-lg-8">
-          <div class="row">
-            {%if user.is_authenticated%}
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Post something new!</h5>
-            <form method="POST">
-            {%csrf_token%}
-            {{form.as_p}}
-            <button class="btn btn-outline-primary" type="submit" style="float:right">POST VLOG!</button>
-          </form>
-        </div>
-      </div>
-            {% endif %}
-          {%for i in vlogs%}
-          <div class="col-xxl-4 col-xl-12">
-
-              <div class="card info-card customers-card">
-
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Options</h6>
-                    </li>
-                      {%csrf_token%}
-                      {%if i.user.profile in user.profile.follows.all %}
-                        <li><a class="dropdown-item" href="{%url 'unfollow' i.user.id%}">Unfollow</a></li>
-                      {% else %}
-                      <li><a class="dropdown-item" href="{%url 'follow' i.user.id%}">Follow</a></li>
-                      {% endif %}
-                    <li><a class="dropdown-item" href="{%url 'Profile' i.user.id%}">See profile</a></li>
-                    <li><a class="dropdown-item" href="{%url 'contact' %}">Report</a></li>
-                  </ul>
-                </div>
-
-                <div class="card-body">
-                  <h5 class="card-title">{{i.user.username}}<span> | {{i.created_at}}</span></h5>
-
-                  <div class="container">
-                    <div class="row g-0">
-                      <div class="col-md-1">
-                        {%if i.user.profile.profileinfor.profile_image %}
-                          <img src="{{i.user.profile.profileinfor.profile_image.url}}" class="rounded-circle" alt="Profile" style='width:100%'>
+              <div class="col-lg-8">
+              {% if UserScreach.all %}
+                <h4>User Profile</h4>
+                {%for i in UserScreach.all%}
+                                <div class="row g-0">
+                        <div class="col-md-4">
+                        {%if i.profile.profileinfor.profile_image %}
+                        <img src="{{i.profile.profileinfor.profile_image.url}}" class="img-fluid rounded-start" alt="...">
                         {%else%}
-                        <img src="{% static 'assets/img/profile-img.jpg' %}" class="rounded-circle" alt="Profile" style="width:100%">
+                            <img src="{% static 'assets/img/profile-img.jpg' %}" class="img-fluid rounded-start" alt="..." style="width:100%">
                         {%endif%}
-                      </div>
-                      <div class="col-md-11">
-                        <div class="card-body" style="padding-left: 12%;">
-                          <h5 class="card-title" style="margin-bottom: 0;">{{i.content}}</h5>
                         </div>
-                        <p style="float:right;margin-bottom: 0;">{{i.number_of_likes}} Likes</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="card-footer">
-                  <div class="container">
-                  <div id="row align-items-start">
-                    <div class="col-4" style="display: inline-block;">
-                      <a href="{%url 'like' i.id%}" >
-                        {%if user in i.likes.all%}
-                        <i class="bi bi-hand-thumbs-up-fill"></i> Unlike 
-                        {%else%}
-                        <i class="bi bi-hand-thumbs-up" ></i> Like
+                        <div class="col-md-8">
+                            <div class="card-body">
+                            <h5 class="card-title"><a href="{%url 'Profile' i.id %}">{{i.profile.user.username}}</a></h5>
+                            <P><strong>About</strong></P>
+                            <p class="card-text">{{i.profile.profileinfor.About}}</p>
+                            
+                            <br/><br/>last Update: {{i.profile.date_modified}}
+                            </div>
+                        </div>
+                        </div>
+                        <hr>
+                {% endfor %}
+              {% endif %}
+              {% if VlogSreach.all %}
+              <h4>Vlog</h4>
+              {%for i in VlogSreach.all%}
+              <div class="col-xxl-4 col-xl-12">
+
+                <div class="card info-card customers-card">
+  
+                  <div class="filter">
+                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                      <li class="dropdown-header text-start">
+                        <h6>Options</h6>
+                      </li>
+                        {%csrf_token%}
+                        {%if i.user.profile in user.profile.follows.all %}
+                          <li><a class="dropdown-item" href="{%url 'unfollow' i.user.id%}">Unfollow</a></li>
+                        {% else %}
+                        <li><a class="dropdown-item" href="{%url 'follow' i.user.id%}">Follow</a></li>
                         {% endif %}
-                      </a>
-                    </div>
-                    <div class="col-3" style="display: inline-block">
-                      <a href="" style="margin-left: 2rem;"><i class="bi bi-chat"></i> Comment</a></div>
-                    <div class="col-4" style="display: inline-block">
-                      <a href="{%url 'share' i.id%}" style="margin-left:8rem;" ><i class="ri ri-share-forward-fill"></i> Share</a>
-                    </div>
-                </div>
-              </div>
-                </div>
-                <div class="card-footer">
-                  <div id="row align-items-start">
-                    <div class="col-1" style="display: inline-block;">
-                      {%if i.user.profile.profileinfor.profile_image %}
-                          <img src="{{i.user.profile.profileinfor.profile_image.url}}" class="rounded-circle" alt="Profile" style='width:70%'>
-                        {%else%}
-                        <img src="{% static 'assets/img/profile-img.jpg' %}" class="rounded-circle" alt="Profile" style="width:100%">
-                        {%endif%}
-                    </div>
-                    <div class="col-8" style="display: inline-block;">
-                      <form method="POST">
-                        {% csrf_token %}
-                      <input type="text" placeholder="Comment..." class="form-control" name="comment" style="border-radius: 2rem;">
-                    </div>
-                      <div class="col-2" style="display: inline-block;">
-                        <button type="submit" class="btn btn-primary" style="margin-left: 2rem;" value="{{i.id}}" name="send">Send</button>
+                      <li><a class="dropdown-item" href="{%url 'Profile' i.user.id%}">See profile</a></li>
+                      <li><a class="dropdown-item" href="{%url 'contact' %}">Report</a></li>
+                    </ul>
+                  </div>
+  
+                  <div class="card-body">
+                    <h5 class="card-title">{{i.user.username}}<span> | {{i.created_at}}</span></h5>
+  
+                    <div class="container">
+                      <div class="row g-0">
+                        <div class="col-md-1">
+                          {%if i.user.profile.profileinfor.profile_image %}
+                            <img src="{{i.user.profile.profileinfor.profile_image.url}}" class="rounded-circle" alt="Profile" style='width:100%'>
+                          {%else%}
+                          <img src="{% static 'assets/img/profile-img.jpg' %}" class="rounded-circle" alt="Profile" style="width:100%">
+                          {%endif%}
+                        </div>
+                        <div class="col-md-11">
+                          <div class="card-body" style="padding-left: 12%;">
+                            <h5 class="card-title" style="margin-bottom: 0;">{{i.content}}</h5>
+                          </div>
+                          <p style="float:right;margin-bottom: 0;">{{i.number_of_likes}} Likes</p>
+                        </div>
                       </div>
-                    </form>
                     </div>
                   </div>
                   <div class="card-footer">
-                  {% for j in i.commented.all%}
-                    <div class="row align-items-start">
+                    <div class="container">
+                    <div id="row align-items-start">
+                      <div class="col-4" style="display: inline-block;">
+                        <a href="{%url 'like' i.id%}" >
+                          {%if user in i.likes.all%}
+                          <i class="bi bi-hand-thumbs-up-fill"></i> Unlike 
+                          {%else%}
+                          <i class="bi bi-hand-thumbs-up" ></i> Like
+                          {% endif %}
+                        </a>
+                      </div>
+                      <div class="col-3" style="display: inline-block">
+                        <a href="" style="margin-left: 2rem;"><i class="bi bi-chat"></i> Comment</a></div>
+                      <div class="col-4" style="display: inline-block">
+                        <a href="{%url 'share' i.id%}" style="margin-left:8rem;" ><i class="ri ri-share-forward-fill"></i> Share</a>
+                      </div>
+                  </div>
+                </div>
+                  </div>
+                  <div class="card-footer">
+                    <div id="row align-items-start">
                       <div class="col-1" style="display: inline-block;">
-                        {%if j.user.profile.profileinfor.profile_image %}
-                            <img src="{{j.user.profile.profileinfor.profile_image.url}}" class="rounded-circle" alt="Profile" style='width:70%'>
+                        {%if i.user.profile.profileinfor.profile_image %}
+                            <img src="{{i.user.profile.profileinfor.profile_image.url}}" class="rounded-circle" alt="Profile" style='width:70%'>
                           {%else%}
                           <img src="{% static 'assets/img/profile-img.jpg' %}" class="rounded-circle" alt="Profile" style="width:100%">
                           {%endif%}
                       </div>
                       <div class="col-8" style="display: inline-block;">
-                        <h5 class="card-title" style="padding: 0;">{{j.user.username}}<span> | {{j.created_at}}</span></h5>
-                        <p>{{j.content}}</p>
+                        <form method="POST">
+                          {% csrf_token %}
+                        <input type="text" placeholder="Comment..." class="form-control" name="comment" style="border-radius: 2rem;">
+                      </div>
+                        <div class="col-2" style="display: inline-block;">
+                          <button type="submit" class="btn btn-primary" style="margin-left: 2rem;" value="{{i.id}}" name="send">Send</button>
+                        </div>
+                      </form>
+                      </div>
                     </div>
-                    </div>
-                  {% endfor %}
+                    <div class="card-footer">
+                    {% for j in i.commented.all%}
+                      <div class="row align-items-start">
+                        <div class="col-1" style="display: inline-block;">
+                          {%if j.user.profile.profileinfor.profile_image %}
+                              <img src="{{j.user.profile.profileinfor.profile_image.url}}" class="rounded-circle" alt="Profile" style='width:70%'>
+                            {%else%}
+                            <img src="{% static 'assets/img/profile-img.jpg' %}" class="rounded-circle" alt="Profile" style="width:100%">
+                            {%endif%}
+                        </div>
+                        <div class="col-8" style="display: inline-block;">
+                          <h5 class="card-title" style="padding: 0;">{{j.user.username}}<span> | {{j.created_at}}</span></h5>
+                          <p>{{j.content}}</p>
+                      </div>
+                      </div>
+                    {% endfor %}
+                  </div>
+                  </div>
                 </div>
-                </div>
+              {%endfor%}
+              {%endif%}
               </div>
-            {%endfor%}
-          </div>
-        </div><!-- End Left side columns -->
-        <!-- Right side columns -->
         <div class="col-lg-4">
 
           <!-- Recent Activity -->
@@ -425,7 +420,8 @@
           </div><!-- End News & Updates -->
 
         </div><!-- End Right side columns -->
-
+        
+        
         </div>
     </section>
- {% endblock %}
+{% endblock %}

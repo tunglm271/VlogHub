@@ -75,6 +75,25 @@
                             </div>
                           </div>
                           </div>
+                          {%if i.commented.all%}
+                          <div class="card-footer">
+                            {% for j in i.commented.all%}
+                              <div class="row align-items-start">
+                                <div class="col-1" style="display: inline-block;">
+                                  {%if j.user.profile.profileinfor.profile_image %}
+                                      <img src="{{j.user.profile.profileinfor.profile_image.url}}" class="rounded-circle" alt="Profile" style='width:70%'>
+                                    {%else%}
+                                    <img src="{% static 'assets/img/profile-img.jpg' %}" class="rounded-circle" alt="Profile" style="width:100%">
+                                    {%endif%}
+                                </div>
+                                <div class="col-8" style="display: inline-block;">
+                                  <h5 class="card-title" style="padding: 0;">{{j.user.username}}<span> | {{j.created_at}}</span></h5>
+                                  <p>{{j.content}}</p>
+                              </div>
+                              </div>
+                            {% endfor %}
+                          </div>
+                          {% endif %}
                         </div>
                 {%endfor%}
             {% else %}
