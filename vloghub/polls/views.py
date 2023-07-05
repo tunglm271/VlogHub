@@ -22,6 +22,7 @@ def Index(request):
             com_content = request.POST['comment']
             new_com = comment(vlog=vlog_com,content=com_content,user= request.user)
             new_com.save()
+            messages.success(request,("You just commemt a vlog!"))
         vlogs = vlog.objects.all().order_by('-created_at')
         return render(request,"polls/index.html",{'vlogs':vlogs,'form':form,'profile':profile})
     else:
