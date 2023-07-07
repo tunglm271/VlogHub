@@ -4,16 +4,17 @@ from .models import vlog,ProfileInfor
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 class VlogForm(forms.ModelForm):
-    content = forms.CharField(required=True,
-        widget = forms.widgets.Textarea(
-            attrs= { 
-                "placeholder": "Enter your vlog...",
-                "class": "form-control"}
-            ),
-            label ="",
-        )
+    # content = forms.CharField(required=True,
+    #     widget = forms.widgets.Textarea(
+    #         attrs= { 
+    #             "placeholder": "Enter your vlog...",
+    #             "class": "form-control"}
+    #         ),
+    #         label ="",
+    #     )
     class Meta:
         model = vlog
+        fields = '__all__'
         exclude = ("user","likes")
 
 class SignUpForm(UserCreationForm):

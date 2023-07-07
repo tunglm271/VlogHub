@@ -5,7 +5,7 @@
       <h1>{{profile.user.username}}'s Profile</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="{%url 'Index'%}">Home</a></li>
           <li class="breadcrumb-item active">Profile list</li>
           <li class="breadcrumb-item active">{{profile.user.username}}'s Profile</li>
         </ol>
@@ -56,7 +56,7 @@
                           <div class="card-body">
                             <h5 class="card-title">{{Vlog.user.username}}<span> | {{Vlog.created_at}}</span></h5>
                             <div class="d-flex align-items-center">
-                                {{Vlog.content}}
+                                {{Vlog.content|safe}}
                             </div>
                             <p style="float:right;margin-bottom: 0;">{{Vlog.number_of_likes}} Likes</p>
                           </div>
@@ -103,6 +103,7 @@
                             <h5 class="card-title" style="padding-top: 0;">Edit your vlog!</h5>
                             <form method="POST">
                             {%csrf_token%}
+                            {{form.media}}
                             {{form.as_p}}
                             <button class="btn btn-outline-primary" type="submit" style="float:right">UPDATE VLOG!</button>
                         </form>
@@ -119,7 +120,7 @@
                               {%endif%}
                             </h5>
                             <div class="d-flex align-items-center">
-                                {{i.content}}
+                                {{i.content|safe}}
                             </div>
                             <p style="float:right;margin-bottom: 0;">{{i.number_of_likes}} Likes</p>
                           </div>

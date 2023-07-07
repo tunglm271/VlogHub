@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
+from ckeditor.fields import RichTextField 
 # Create your models here.
 
 class Profile(models.Model):
@@ -43,7 +44,8 @@ post_save.connect(create_infor,sender = User)
 
 class vlog(models.Model):
     user = models.ForeignKey(User,related_name='vlogs',on_delete=models.DO_NOTHING)
-    content = models.TextField(max_length=500)
+    #content = models.TextField(max_length=500)
+    content = RichTextField()
     created_at = models.DateTimeField(auto_now_add=True)
     likes = models.ManyToManyField(User,related_name="vlog_like",blank=True)
 

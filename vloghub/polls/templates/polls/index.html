@@ -30,9 +30,10 @@
             <div class="card-body">
               <h5 class="card-title">Post something new!</h5>
             <form method="POST">
-            {%csrf_token%}
-            {{form.as_p}}
-            <button class="btn btn-outline-primary" type="submit" style="float:right">POST VLOG!</button>
+              {%csrf_token%}
+              {{form.media}}
+              {{form.as_p}}
+              <button class="btn btn-outline-primary" type="submit" style="float:right">POST VLOG!</button>
           </form>
         </div>
       </div>
@@ -73,7 +74,7 @@
                       </div>
                       <div class="col-md-11">
                         <div class="card-body" style="padding-left: 12%;">
-                          <h5 class="card-title" style="margin-bottom: 0;">{{i.content}}</h5>
+                          <h5 class="card-title" style="margin-bottom: 0;">{{i.content|safe}}</h5>
                         </div>
                         <p style="float:right;margin-bottom: 0;">{{i.number_of_likes}} Likes</p>
                       </div>
