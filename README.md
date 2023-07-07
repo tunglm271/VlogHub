@@ -3,7 +3,7 @@ VlogHub is a web application developed using Django, PostgreSQL, HTML, CSS, and 
 ## Feature 
 * User Registration and Authentication: Users can create an account and log in to the application. Passwords are securely stored using encryption techniques.
 * Profile Pages: Each user has a dedicated profile page where they can showcase their vlogs and provide information about themselves.
-* Vlog Creation: Users can create and publish their vlogs by adding a title, description, and multimedia content (e.g., images, videos).
+* Vlog Creation: Users can create and publish their vlogs by adding a title, description, and multimedia content (e.g., images,..).
 * Interactions: Users can like and comment on vlogs posted by other users, fostering engagement and interaction within the community.
 * Following: Users have the option to follow other users, allowing them to see updates and new vlogs from the users they follow.
 * Searching: Users can search for other users or vlogs based on specific criteria. The search function allows users to find users whose usernames contain the entered string or vlogs that include the entered string in content.
