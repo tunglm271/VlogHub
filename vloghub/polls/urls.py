@@ -18,5 +18,5 @@ urlpatterns = [
     path('follow/<int:pk>',views.follow,name="follow"),
     path('sreached/',views.sreach,name='sreach'),
     path("delete/<int:pk>",views.delete_vlog,name="delete"),
-    path("update/<int:pk>",views.update_vlog,name="update")
+    path("update/<int:pk>",views.update_vlog,name="update"),
 ]
