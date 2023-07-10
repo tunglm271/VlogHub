@@ -1,6 +1,6 @@
 from django.shortcuts import render,HttpResponse, redirect,get_object_or_404
 from django.contrib import messages
-from .models import Profile,vlog,ProfileInfor, comment
+from .models import Profile,vlog,ProfileInfor, comment,feedBack
 from .forms import VlogForm, SignUpForm,PostProfile
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -77,6 +77,14 @@ def FQA(request):
     return render(request,'polls/pages-faq.html',{'profile':profile})
 def contact(request):
     profile = Profile.objects.get(user_id = request.user.id)
+    if request.method == "POST":
+        name = request.POST['name']
+        email = request.POST['email']
+        subject = request.POST['subject']
+        message = request.POST['message']
+        reponse = feedBack(name= name, email = email, subject= subject, message = message)
+        reponse.save()
+        messages.success(request,("You just sent a feedback!"))
     return render(request,'polls/pages-contact.html',{'profile':profile})
 
 # Profile function
