@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
-from .models import Profile,vlog,ProfileInfor,comment, feedBack
+from .models import Profile,vlog,ProfileInfor,comment
 # Register your models here.
 
 class ProfileInline(admin.StackedInline):
@@ -18,4 +18,3 @@ admin.site.register(User,UserAdmin)
 admin.site.register(vlog)
 admin.site.register(ProfileInfor)
 admin.site.register(comment)
-admin.site.register(feedBack)

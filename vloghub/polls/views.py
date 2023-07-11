@@ -1,6 +1,6 @@
 from django.shortcuts import render,HttpResponse, redirect,get_object_or_404
 from django.contrib import messages
-from .models import Profile,vlog,ProfileInfor, comment,feedBack
+from .models import Profile,vlog,ProfileInfor, comment
 from .forms import VlogForm, SignUpForm,PostProfile
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -32,7 +32,7 @@ def Index(request):
 def ProfileList(request):
     if request.user.is_authenticated:
         profile = Profile.objects.get(user_id = request.user.id)
-        profiles = Profile.objects.exclude(user=request.user)
+        profiles = Profile.objects.exclude(user=request.user).order_by('-id')
         return render(request,'polls/Profile_list.html',{'profiles': profiles,'profile':profile})
     else:
         messages.success(request,("you need to sign in first!"))
@@ -73,20 +73,17 @@ def Register(request):
 
 
 def FQA(request):
-    profile = Profile.objects.get(user_id = request.user.id)
-    return render(request,'polls/pages-faq.html',{'profile':profile})
+    if request.user.is_authenticated:
+        profile = Profile.objects.get(user_id = request.user.id)
+        return render(request,'polls/pages-faq.html',{'profile':profile})
+    else:
+        return render(request,'polls/pages-faq.html')
 def contact(request):
-    profile = Profile.objects.get(user_id = request.user.id)
-    if request.method == "POST":
-        name = request.POST['name']
-        email = request.POST['email']
-        subject = request.POST['subject']
-        message = request.POST['message']
-        reponse = feedBack(name= name, email = email, subject= subject, message = message)
-        reponse.save()
-        messages.success(request,("You just sent a feedback!"))
-    return render(request,'polls/pages-contact.html',{'profile':profile})
-
+    if request.user.is_authenticated:
+        profile = Profile.objects.get(user_id = request.user.id)
+        return render(request,'polls/pages-contact.html',{'profile':profile})
+    else:
+        return render(request,'polls/pages-contact.html')
 # Profile function
 def ViewProfile(request,pk):
     if request.user.is_authenticated:

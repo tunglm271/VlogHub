@@ -4,7 +4,7 @@
       <h1>Contact</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{%url 'Index'%}">Home</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
           <li class="breadcrumb-item">Pages</li>
           <li class="breadcrumb-item active">Contact</li>
         </ol>
@@ -52,9 +52,9 @@
 
         <div class="col-xl-6">
           <div class="card p-4">
-            <form method="POST">
-            {% csrf_token %}
+            <form action="forms/contact.php" method="post" class="php-email-form">
               <div class="row gy-4">
+
                 <div class="col-md-6">
                   <input type="text" name="name" class="form-control" placeholder="Your Name" required>
                 </div>
@@ -72,16 +72,11 @@
                 </div>
 
                 <div class="col-md-12 text-center">
-                      {% if messages%}
-                      {% for i in messages %}
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                  <i class="bi bi-check-circle"></i>
-                                  {{i}}
-                                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>
-                      {% endfor %}
-                      {% endif %}
-                  <button type="submit" class='btn btn-primary btn-lg'>Send Message</button>
+                  <div class="loading">Loading</div>
+                  <div class="error-message"></div>
+                  <div class="sent-message">Your message has been sent. Thank you!</div>
+
+                  <button type="submit">Send Message</button>
                 </div>
 
               </div>
