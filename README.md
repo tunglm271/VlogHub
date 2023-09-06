@@ -42,11 +42,6 @@ python manage.py migrate
 python manage.py runserver
 ```
 9. Access VlogHub in your web browser at **http://localhost:8000/**<br>
-## The Reason Why i built this web app
-i choice django framework because its convenience, how it's fexible with database, high sercurity and
-i already have a friend-collaborate web app project build on django framework. So with pre-existing foundation about html,css and django, i quickly start building **Vloghub**
-## Time
-The project was started to be created from 2/7/2023 and first uploaded to github on 4/7/2023
 ## Deployment
 To deploy VlogHub and make it accessible to others, i used ngrok, a tool that creates secure tunnels to my locally hosted web application<br>
 <a href="https://ead2-14-191-166-50.ngrok-free.app" target="_blank">Vloghub</a>
