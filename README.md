@@ -8,7 +8,10 @@ VlogHub is a web application developed using Django, PostgreSQL, HTML, CSS, and 
 * Following: Users have the option to follow other users, allowing them to see updates and new vlogs from the users they follow.
 * Searching: Users can search for other users or vlogs based on specific criteria. The search function allows users to find users whose usernames contain the entered string or vlogs that include the entered string in content.
 * Edit and Delete Vlogs: Users have the ability to edit or delete vlogs that they have posted before. This allows users to update their vlogs with new information or remove vlogs that are no longer relevant.
-* Send feedback: VlogHub provides a "Send Feedback" feature that allows users to share their thoughts, suggestions, and comments about the platform. Admin can see those feedbacks on the admin's site and contact users throught the email contact that they wrote on the feedback form. 
+* Send feedback: VlogHub provides a "Send Feedback" feature that allows users to share their thoughts, suggestions, and comments about the platform. Admin can see those feedbacks on the admin's site and contact users throught the email contact that they wrote on the feedback form.
+
+## Upcoming features
+create real time respond without refresh page when like or dislike, comment vlog, follow or unfflow profile with AJAX IPA or websocket
 ## Installation
 To run VlogHub locally on your machine, follow the instructions below:
 1. Clone the repository:
